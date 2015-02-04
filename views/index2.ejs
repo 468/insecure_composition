@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="/assets/jquery.min.js"></script>
+	<script src="/assets/socket.io.js"></script>
+</head>
+<body>	
+<script>
+var socket = io.connect('http://localhost:8083/');
+ 
+      socket.on('connect', function(data){
+      	console.log('connected');
+      });
+
+</script>
+
+<style>
+	#canvas1{
+		width:100%
+	}
+
+</style>
+
+
+<canvas id="canvas1" width="1000" height="500"></canvas>
+
+<script type="text/javascript">
+
+      function loadCanvas(dataURL) {
+        var canvas = document.getElementById('canvas1');
+        var context = canvas.getContext('2d');
+
+        // load image from data url
+        var imageObj = new Image();
+        imageObj.onload = function() {
+          context.drawImage(this, 0, 0);
+        };
+
+        imageObj.src = dataURL;
+      }
+      
+      // make ajax call to get image data url
+      var request = new XMLHttpRequest();
+      request.open('GET', '/assets/painting.txt', true);
+      request.onreadystatechange = function() {
+        // Makes sure the document is ready to parse.
+        if(request.readyState == 4) {
+          // Makes sure it's found the file.
+          if(request.status == 200) {
+            loadCanvas(request.responseText);
+          }
+        }
+      };
+      request.send(null);
+
+
+</script>
+
+
+</body>
+</html>

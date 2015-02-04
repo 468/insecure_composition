@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="/assets/jquery.min.js"></script>
+	<script src="/assets/socket.io.js"></script>
+</head>
+<body>	
+<script>
+var socket = io.connect('http://localhost:8083/');
+ 
+      socket.on('connect', function(data){
+      	console.log('connected');
+      });
+
+</script>
+
+<style>
+	#canvas1{
+		width:100%
+	}
+
+</style>
+
+
+<canvas id="canvas1" width="800" height="600"></canvas>
+
+
+
+</body>
+</html>
