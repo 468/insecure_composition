@@ -19,6 +19,23 @@ if(fs.existsSync('./assets/painting.txt')){
 
 
 var sessions = {}
+var sessionCount = 0;
+var totalSessionTime = 0;
+var currentAverageSessionTime = 0;
+
+var calcNewAverageSessionTime = function(time,count){
+  var average = time/count;
+
+  if( average > currentAverageSessionTime ){
+    console.log('time spent increased to ' + average)
+    currentAverageSessionTime = average;
+    return (time / count)
+  }else{
+    console.log('time spent decreased to ' + average)
+    currentAverageSessionTime = average;
+    return (time / count)
+  }
+}
 
 io.sockets.on('connection', function (socket) {
   console.log('Connected');
@@ -26,6 +43,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
         var sessionLength = Date.now() - sessions[socket.id]
         console.log(sessionLength);
+        sessionCount += 1;
+        totalSessionTime += sessionLength;
+        calcNewAverageSessionTime(totalSessionTime,sessionCount);
         delete sessions[socket.id];
     });
  });
@@ -38,8 +58,18 @@ app.get('/2', function(req,res){
 	res.render("index2");
 });
 
+/*
 
-painter.makeAlteration();
+IF VISIT DECREASED AVERAGE
+  PAINTER.MAKEALTERATION()
+ELSE IF VISIT INCREASED AVERAGE
+  PAINTER.OVERWRITEPAINTING()
+  PAINTER.MAKEALTERATION()
+END
+  
+*/
+//painter.makeAlteration();
+//painter.overwritePainting();
 
 // do it in batches of 10/100 ?
 

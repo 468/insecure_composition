@@ -55,6 +55,7 @@ exports.makeAlteration = function(){
   , ctx = canvas.getContext('2d');
     width = canvas.width;
     height = canvas.height;
+    tenpercent = (width*height)/10
     // create a new pixel array
     //imageData = ctx.createImageData(width, height);
     //ctx.putImageData(imageData, 0, 0);
@@ -64,6 +65,20 @@ exports.makeAlteration = function(){
         img.src = data.toString();
         ctx.drawImage(img,0,0);
 
+        imageData = ctx.getImageData(0,0,width, height);
+
+    // draw random dots
+    for (i = 0; i < tenpercent; i++) {
+        x = Math.random() * width | 0; // |0 to truncate to Int32
+        y = Math.random() * height | 0;
+        r = Math.random() * 256 | 0;
+        g = Math.random() * 256 | 0;
+        b = Math.random() * 256 | 0;
+        setPixel(imageData, x, y, r, g, b, 255); // 255 opaque
+    }
+
+    // copy the image data back onto the canvas
+    ctx.putImageData(imageData, 0, 0); // at coords 0,0
         fs.writeFile('./assets/altered_painting.txt', canvas.toDataURL(), function(err){
             if(err){
                 console.log(err);
@@ -75,3 +90,7 @@ exports.makeAlteration = function(){
 }
 
 
+exports.overwritePainting = function(){
+    fs.renameSync('./assets/altered_painting.txt', './assets/painting.txt')
+    console.log("Original painting overwritten")
+}
