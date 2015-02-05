@@ -40,6 +40,11 @@ exports.createNewPainting = function(){
       console.log(err);
     } else {
       console.log("Painting updated");
+      fs.writeFile('./assets/altered_painting.txt', canvas.toDataURL(), function(err){
+        if(err){
+         console.log(err);
+        }
+      });
     }
 
 });

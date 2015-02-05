@@ -41,7 +41,7 @@ var socket = io.connect('http://localhost:8083/');
       
       // make ajax call to get image data url
       var request = new XMLHttpRequest();
-      request.open('GET', '/assets/painting.txt', true);
+      request.open('GET', '/assets/altered_painting.txt', true);
       request.onreadystatechange = function() {
         // Makes sure the document is ready to parse.
         if(request.readyState == 4) {

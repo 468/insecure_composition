@@ -14,7 +14,7 @@ if(fs.existsSync('./assets/painting.txt')){
   console.log("Painting txt file exists")
 }else{
   painter.createNewPainting();
-  console.log("New painting txt file created.")
+  console.log("New painting & alteration txts created.")
 }
 
 
@@ -29,11 +29,12 @@ var calcNewAverageSessionTime = function(time,count){
   if( average > currentAverageSessionTime ){
     console.log('time spent increased to ' + average)
     currentAverageSessionTime = average;
-    return (time / count)
+    painter.overwritePainting();
+    painter.makeAlteration();
   }else{
     console.log('time spent decreased to ' + average)
     currentAverageSessionTime = average;
-    return (time / count)
+    painter.makeAlteration();
   }
 }
 
@@ -60,18 +61,8 @@ app.get('/2', function(req,res){
 
 /*
 
-IF VISIT DECREASED AVERAGE
-  PAINTER.MAKEALTERATION()
-ELSE IF VISIT INCREASED AVERAGE
-  PAINTER.OVERWRITEPAINTING()
-  PAINTER.MAKEALTERATION()
-END
+
   
 */
 //painter.makeAlteration();
 //painter.overwritePainting();
-
-// do it in batches of 10/100 ?
-
-// if + : keep change, make new
-// if - : roll back last change
