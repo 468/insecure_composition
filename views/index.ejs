@@ -24,6 +24,37 @@ var socket = io.connect('http://localhost:8083/');
 
 <canvas id="canvas1" width="800" height="600"></canvas>
 
+<script type="text/javascript">
+
+      function loadCanvas(dataURL) {
+        var canvas = document.getElementById('canvas1');
+        var context = canvas.getContext('2d');
+
+        // load image from data url
+        var imageObj = new Image();
+        imageObj.onload = function() {
+          context.drawImage(this, 0, 0);
+        };
+
+        imageObj.src = dataURL;
+      }
+      
+      // make ajax call to get image data url
+      var request = new XMLHttpRequest();
+      request.open('GET', '/assets/altered_painting.txt', true);
+      request.onreadystatechange = function() {
+        // Makes sure the document is ready to parse.
+        if(request.readyState == 4) {
+          // Makes sure it's found the file.
+          if(request.status == 200) {
+            loadCanvas(request.responseText);
+          }
+        }
+      };
+      request.send(null);
+
+
+</script>
 
 
 </body>

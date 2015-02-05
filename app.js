@@ -10,13 +10,12 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use("/assets", express.static(__dirname + '/assets'));
 
-if(fs.existsSync('./assets/painting.txt')){
-  console.log("Painting txt file exists")
+if( (fs.existsSync('./assets/painting.txt')) && (fs.existsSync('./assets/altered_painting.txt')){
+  console.log("Painting txt files exist")
 }else{
   painter.createNewPainting();
   console.log("New painting & alteration txts created.")
 }
-
 
 var sessions = {}
 var sessionCount = 0;
@@ -54,15 +53,3 @@ io.sockets.on('connection', function (socket) {
 app.get('/', function(req,res){
 	res.render("index");
 });
-
-app.get('/2', function(req,res){
-	res.render("index2");
-});
-
-/*
-
-
-  
-*/
-//painter.makeAlteration();
-//painter.overwritePainting();

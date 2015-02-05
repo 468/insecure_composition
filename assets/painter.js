@@ -1,4 +1,5 @@
 var fs = require('fs');
+// rand pixel imagedata method via http://beej.us/blog/data/html5s-canvas-2-pixel/
 
 var setPixel = function(imageData, x, y, r, g, b, a) {
     index = (x + y * imageData.width) * 4;
@@ -61,9 +62,7 @@ exports.makeAlteration = function(){
     width = canvas.width;
     height = canvas.height;
     tenpercent = (width*height)/10
-    // create a new pixel array
-    //imageData = ctx.createImageData(width, height);
-    //ctx.putImageData(imageData, 0, 0);
+
     fs.readFile('./assets/painting.txt', function(err, data){
         if (err) throw err;
         var img = new Image();
@@ -72,18 +71,17 @@ exports.makeAlteration = function(){
 
         imageData = ctx.getImageData(0,0,width, height);
 
-    // draw random dots
-    for (i = 0; i < tenpercent; i++) {
-        x = Math.random() * width | 0; // |0 to truncate to Int32
-        y = Math.random() * height | 0;
-        r = Math.random() * 256 | 0;
-        g = Math.random() * 256 | 0;
-        b = Math.random() * 256 | 0;
-        setPixel(imageData, x, y, r, g, b, 255); // 255 opaque
-    }
+        // draw random dots
+        for (i = 0; i < tenpercent; i++) {
+            x = Math.random() * width | 0; // |0 to truncate to Int32
+            y = Math.random() * height | 0;
+            r = Math.random() * 256 | 0;
+            g = Math.random() * 256 | 0;
+            b = Math.random() * 256 | 0;
+            setPixel(imageData, x, y, r, g, b, 255); // 255 opaque
+        }
 
-    // copy the image data back onto the canvas
-    ctx.putImageData(imageData, 0, 0); // at coords 0,0
+        ctx.putImageData(imageData, 0, 0); // at coords 0,0
         fs.writeFile('./assets/altered_painting.txt', canvas.toDataURL(), function(err){
             if(err){
                 console.log(err);
