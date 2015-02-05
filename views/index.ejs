@@ -6,6 +6,13 @@
 </head>
 <body>	
 <script>
+
+$(document).ready(function(){
+  $('#infodropdown').click(function(){
+    $('#info').slideToggle();
+  });
+});
+
 var socket = io.connect('http://localhost:8083/');
  
       socket.on('connect', function(data){
@@ -15,9 +22,30 @@ var socket = io.connect('http://localhost:8083/');
 </script>
 
 <style>
+
+  body,html{
+    margin:0;
+  }
 	#canvas1{
 		width:100%
 	}
+
+  #infobox{
+    max-width:300px;
+    padding:10px;
+    border:1px dotted #000;
+    color: #000;
+    position:fixed;
+    left:10px;
+    bottom:10px;
+    display:block;
+    background-color:#fff;
+    opacity:0.55;
+  }
+
+  #info{
+    display:none;
+  }
 
 </style>
 
@@ -52,10 +80,16 @@ var socket = io.connect('http://localhost:8083/');
         }
       };
       request.send(null);
-
-
 </script>
 
+<div id='infobox'>
+  <a href='#' id='infodropdown'>i</a>
+  <div id='info'>
+    <b>Insecure Composition</b>
+    <p>A highly inefficient work of art(/random array of pixels) that automatically adjusts itself based on viewer response (in terms of 'captivation period').</p>
+    <p>The pixels mutate by 10% at the end of each viewing: if a visit causes the average time spent looking to increase, the composition saves its current state before making further experimentations. If a visit causes the average time spent looking to decrease, the composition overwrites its most recent change.</p>
+  </div>
+</div>
 
 </body>
 </html>

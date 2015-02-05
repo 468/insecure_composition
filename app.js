@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use("/assets", express.static(__dirname + '/assets'));
 
-if( (fs.existsSync('./assets/painting.txt')) && (fs.existsSync('./assets/altered_painting.txt')){
+if( fs.existsSync('./assets/painting.txt') && fs.existsSync('./assets/altered_painting.txt')){
   console.log("Painting txt files exist")
 }else{
   painter.createNewPainting();
