@@ -9,4 +9,5 @@ Images are stored as base64 dataURLs in two .txt files (painting/altered_paintin
 Setup:
 
 Install node-canvas according to instructions @ https://github.com/Automattic/node-canvas
+
 Change socket in views/index.ejs to reflect your URL (line 16)
